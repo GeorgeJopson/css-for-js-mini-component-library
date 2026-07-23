@@ -9,15 +9,23 @@ const Select = ({ label, value, onChange, children }) => {
   const displayedValue = getDisplayedValue(value, children);
 
   return (
-    <SelectBox>
-      {displayedValue}
-      <PositionedIcon id="chevron-down"/>
+    <Wrapper>
       <NativeSelect value={value} onChange={onChange}>
         {children}
       </NativeSelect>
-    </SelectBox>
+
+      <SelectBox>
+        {displayedValue}
+        <PositionedIcon id={"chevron-down"}/>
+      </SelectBox>
+    </Wrapper>
   );
 };
+
+const Wrapper = styled('div')`
+    position: relative;
+    width: max-content;
+`
 
 const PositionedIcon = styled(Icon)`
     position: absolute;
@@ -36,20 +44,21 @@ const NativeSelect = styled('select')`
   appearance: none;
 `;
 
-const SelectBox = styled(`button`)`
-    height: 43px;
-    background-color: ${COLORS.transparentGray15};
-    padding: 12px 52px 12px 16px;
-    position: relative;
-    width: fit-content;
-    font-size: 16px;
-    font-weight: 400;
+const SelectBox = styled(`div`)`
     color: ${COLORS.gray700};
+    background-color: ${COLORS.transparentGray15};
+
+    font-size: 1rem;
+
+    padding: 12px 52px 12px 16px;
+
     border-radius: 8px;
-    
-    border: none;
-    
-    &:hover{
+
+    ${NativeSelect}:focus + & {
+        outline: 5px auto -webkit-focus-ring-color;
+    }
+
+    ${NativeSelect}:hover ~ & {
         color: black;
     }
 `
