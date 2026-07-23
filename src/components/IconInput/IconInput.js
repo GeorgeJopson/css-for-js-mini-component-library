@@ -59,11 +59,9 @@ const InputBar = styled('input')`
         font-weight: 400;
         color: ${COLORS.gray500};
     }
-    &:focus{
-        outline: 5px auto ${COLORS.primary};
-        outline: 5px auto -webkit-focus-ring-color;
-        outline-offset: 4px;
-    }
+
+    outline-offset: 2px;
+    
     &:hover{
         color: black;
     }
