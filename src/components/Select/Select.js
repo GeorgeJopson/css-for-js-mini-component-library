@@ -32,6 +32,7 @@ const PositionedIcon = styled(Icon)`
     right: 16px;
     top: 50%;
     transform: translateY(-50%);
+    pointer-events: none;
 `
 
 const NativeSelect = styled('select')`
