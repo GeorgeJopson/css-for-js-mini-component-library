@@ -3,6 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import {COLORS} from '../../constants';
+import VisuallyHidden from '../VisuallyHidden';
 
 const ProgressBar = ({value, size}) => {
   const boundedValue = Math.min(Math.max(value,0),100);
@@ -14,28 +15,26 @@ const ProgressBar = ({value, size}) => {
       aria-valuemax={100}
       $size={size}
     >
-      <InternalProgressIndicator $value={boundedValue}/>
+      <VisuallyHidden>{value}%</VisuallyHidden>
+      <InternalProgressIndicatorWrapper>
+        <InternalProgressIndicator $value={boundedValue}/>
+      </InternalProgressIndicatorWrapper>
     </ProgressWrapper>
   );
 };
 
-const DEFAULT_WIDTH = 370;
-
 const SIZE_CONSTANTS = {
   "small":{
-    width: DEFAULT_WIDTH,
     height: 8,
     padding: 0,
     radius: 4
   },
   "medium":{
-    width: DEFAULT_WIDTH,
     height: 12,
     padding: 0,
     radius: 4
   },
   "large":{
-    width: DEFAULT_WIDTH,
     height: 24,
     padding: 4,
     radius: 8
@@ -44,7 +43,7 @@ const SIZE_CONSTANTS = {
 }
 
 const ProgressWrapper = styled('div')`
-    width: ${({$size})=>SIZE_CONSTANTS[$size].width}px;
+    width: 370px;
     height: ${({$size})=>SIZE_CONSTANTS[$size].height}px;
     padding: ${({$size})=>SIZE_CONSTANTS[$size].padding}px;
     border-radius: ${({$size})=>SIZE_CONSTANTS[$size].radius}px;
@@ -53,19 +52,17 @@ const ProgressWrapper = styled('div')`
     box-shadow: inset 0 2px 4px ${COLORS.transparentGray35};
 `
 
-function calcEndBorderRadius(value) {
-  return Math.max((value - 98)/2 * 4, 0);
-}
+const InternalProgressIndicatorWrapper = styled('div')`
+    border-radius: 4px;
+    height: 100%;
+    // Hide any overflow from InternalProgressIndicator, when it is near full
+    overflow: hidden;`
 
 const InternalProgressIndicator = styled('div')`
     width: ${({$value}) => $value}%;
     height: 100%;
     background-color: ${COLORS.primary};
-    border-radius: 
-            4px 
-            ${({$value}) => calcEndBorderRadius($value)}px 
-            ${({$value}) => calcEndBorderRadius($value)}px 
-            4px;
+    border-radius: 4px 0 0 4px;
 `
 
 export default ProgressBar;
