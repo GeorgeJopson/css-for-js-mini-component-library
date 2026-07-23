@@ -14,24 +14,15 @@ const IconInput = ({
   placeholder,
 }) => {
   return <Wrapper width={width}>
-
-    <InputIcon id={icon}/><InputBar  size={size}></InputBar>
+    <VisuallyHidden>{label}</VisuallyHidden>
+    <InputBar  size={size} placeholder={placeholder}></InputBar>
+    <InputIcon id={icon} strokeWidth={2}/>
   </Wrapper>;
 };
 
 const Wrapper = styled('div')`
     width:${({ width }) => width}px;
     position: relative;
-`
-const InputIcon = styled(Icon)`
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    margin: auto;
-    width: 24px;
-    height: 24px;
-    pointer-events: none;
 `
 
 const InputBar = styled('input')`
@@ -43,6 +34,36 @@ const InputBar = styled('input')`
     padding-top: 8px;
     padding-bottom: 8px;
     padding-left: 36px;
+    font-weight: 700;
+    color: ${COLORS.gray700};
+    &::placeholder {
+        font-weight: 400;
+        color: ${COLORS.gray500};
+    }
+    &:focus{
+        outline: 5px auto ${COLORS.primary};
+        outline: 5px auto -webkit-focus-ring-color;
+        outline-offset: 4px;
+    }
+    &:hover{
+        color: black;
+    }
+
 `
+const InputIcon = styled(Icon)`
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    width: 24px;
+    height: 24px;
+    pointer-events: none;
+    color: ${COLORS.gray700};
+    ${InputBar}:hover + & {
+        color: black;
+    }
+`
+
 
 export default IconInput;
